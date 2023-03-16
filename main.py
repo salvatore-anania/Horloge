@@ -24,8 +24,12 @@ def afficher_heure(heure):
     if mode=="":
         affiche_heure.config(text=str(current_time[0])+":"+str(current_time[1])+":"+str(current_time[2]))
     else:
-        if heures<13:
+        if heures==0:
+            affiche_heure.config(text=str(12)+":"+str(current_time[1])+":"+str(current_time[2])+"AM")
+        elif heures<12:
             affiche_heure.config(text=str(current_time[0])+":"+str(current_time[1])+":"+str(current_time[2])+"AM")
+        elif heures==12:
+             affiche_heure.config(text=str(12)+":"+str(current_time[1])+":"+str(current_time[2])+"PM")
         else:
             affiche_heure.config(text=str(current_time[0]%12)+":"+str(current_time[1])+":"+str(current_time[2])+"PM")
     fenetre.update()
