@@ -55,10 +55,7 @@ def afficher_heure(heure):
 def instantiation():
     global instance
     
-    if instance=="pause":
-        instance="pause"
-    else:
-        instance="new"
+    
     try:
         int(set_heure.get())
         int(set_minute.get())
@@ -66,6 +63,10 @@ def instantiation():
     except:
         erreur.pack(side=TOP)
     else:
+        if instance=="pause":
+            instance="pause"
+        else:
+            instance="new"
         temp=(int(set_heure.get()),int(set_minute.get()),int(set_seconde.get()))
         erreur.pack_forget
         afficher_heure(temp)
