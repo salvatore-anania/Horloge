@@ -63,13 +63,16 @@ def instantiation():
     except:
         erreur.pack(side=TOP)
     else:
-        if instance=="pause":
-            instance="pause"
+        if int(set_heure.get()) <25 and int(set_heure.get()) >=0 and int(set_minute.get())>=0 and int(set_minute.get())<=60 and int(set_seconde.get())>=0 and int(set_seconde.get())<=60:
+            if instance=="pause":
+                instance="pause"
+            else:
+                instance="new"
+            temp=(int(set_heure.get()),int(set_minute.get()),int(set_seconde.get()))
+            erreur.pack_forget()
+            afficher_heure(temp)
         else:
-            instance="new"
-        temp=(int(set_heure.get()),int(set_minute.get()),int(set_seconde.get()))
-        erreur.pack_forget()
-        afficher_heure(temp)
+            erreur.pack(side=TOP)
     
 def pause():
     global instance
@@ -108,14 +111,20 @@ def set_alarm(heure_alarm):
 def test_alarm():
     try:
             int(set_H_alarm.get())
+            int(set_H_alarm.get())
             int(set_M_alarm.get())
+            int(set_M_alarm.get())
+            int(set_S_alarm.get())
             int(set_S_alarm.get())
     except:
         erreur.pack(side=TOP)
     else:
-        temp=(int(set_H_alarm.get()),int(set_M_alarm.get()),int(set_S_alarm.get()))
-        erreur.pack_forget()
-        set_alarm(temp)
+        if int(set_H_alarm.get()) <25 and int(set_H_alarm.get()) >=0 and int(set_M_alarm.get())>=0 and int(set_M_alarm.get())<=60 and int(set_S_alarm.get())>=0 and int(set_S_alarm.get())<=60:
+            temp=(int(set_H_alarm.get()),int(set_M_alarm.get()),int(set_S_alarm.get()))
+            erreur.pack_forget()
+            set_alarm(temp)
+        else:
+            erreur.pack(side=TOP)
 
 
 def calcul_chrono():
@@ -166,7 +175,7 @@ fenetre.geometry("800x800")
 
 Frame_horloge= Frame(fenetre,bg='grey',width=400)
 
-erreur=Label(Frame_horloge,bg="grey",fg='red', text="Entrez un nombre compris entre 0 et 24 heures et 0 et 60 secondes/minutes",font=("Arial", 15))
+erreur=Label(Frame_horloge,bg="grey",fg='red', text="Entrez un nombre compris entre 0 et 24 heures et 0 et 60 minutes/secondes",font=("Arial", 15))
 
 #initialise les variables nécessaire au fonctionnement des fonctions
 global mode
