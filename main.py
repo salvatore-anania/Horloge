@@ -68,7 +68,7 @@ def instantiation():
         else:
             instance="new"
         temp=(int(set_heure.get()),int(set_minute.get()),int(set_seconde.get()))
-        erreur.pack_forget
+        erreur.pack_forget()
         afficher_heure(temp)
     
 def pause():
@@ -99,7 +99,11 @@ def my_alarm(heure_alarm):
             affiche_alarme.pack(side = TOP,padx=5, pady=5)
         else:
             affiche_alarme.pack_forget()
-        
+            
+ 
+def set_alarm(heure_alarm):
+    set_label_alarm.config(text="Alarme régler pour "+str(heure_alarm[0])+"h"+str(heure_alarm[1])+"m"+str(heure_alarm[2])+"s"+"\nRégler une alarme :")
+    my_alarm(heure_alarm)
     
 def test_alarm():
     try:
@@ -110,8 +114,8 @@ def test_alarm():
         erreur.pack(side=TOP)
     else:
         temp=(int(set_H_alarm.get()),int(set_M_alarm.get()),int(set_S_alarm.get()))
-        erreur.pack_forget
-        my_alarm(temp)
+        erreur.pack_forget()
+        set_alarm(temp)
 
 
 def calcul_chrono():
@@ -160,20 +164,20 @@ fenetre.title("Horloge")
 fenetre.configure(bg='grey')
 fenetre.geometry("800x800")
 
-erreur=Label(fenetre,bg="grey",fg='red', text="Entrez un nombre compris entre 0 et 24 heures et 0 et 60 secondes/minutes",font=("Arial", 15))
-
 Frame_horloge= Frame(fenetre,bg='grey',width=400)
+
+erreur=Label(Frame_horloge,bg="grey",fg='red', text="Entrez un nombre compris entre 0 et 24 heures et 0 et 60 secondes/minutes",font=("Arial", 15))
 
 #initialise les variables nécessaire au fonctionnement des fonctions
 global mode
 chrono_time=[0,0,0]
 mode= ""
 chrono_run="kill"
-my_alarm((30,0,0))
+
 
 #partie liée à affichage de l'heure
-affiche_heure=Label(Frame_horloge, text="current_time", bg="grey",font=("Arial", 100))
-affiche_heure.pack(side = TOP,padx=5, pady=5)
+affiche_heure=Label(Frame_horloge, text="current_time", bg="grey",font=("Arial", 60))
+affiche_heure.pack(side = TOP,padx=5)
 
 #partie liée à l'affichage du réglage de l'heure
 frame_input_time= Frame(Frame_horloge,bg='grey',width=400)
@@ -192,32 +196,35 @@ set_seconde.pack(side=LEFT,padx=5)
 set_seconde_label=Label(frame_input_time, text="S",font=("Arial", 20))
 set_seconde_label.pack(side=LEFT,padx=5)
 
-frame_input_time.pack(pady=5)
+frame_input_time.pack()
 
 lancer_heure=Button(Frame_horloge, text="Regler l'heure",font=("Arial", 15), command= instantiation)
 lancer_heure.pack(pady=5)
 
 #partie liée à l'affichage de l'alarme
 frame_input_alarm= Frame(Frame_horloge,bg='grey',width=400)
+frame_test=Frame(frame_input_alarm,bg='grey',width=400)
 set_label_alarm=Label(frame_input_alarm,bg='grey', text="Régler une alarme :",font=("Arial", 20))
 set_label_alarm.pack(side=TOP,padx=5 ,pady=5)
-set_H_alarm=Entry(frame_input_alarm, text="",width=4,font=("Arial", 15))
+set_H_alarm=Entry(frame_test, text="",width=4,font=("Arial", 15))
 set_H_alarm.pack(side=LEFT,padx=5)
-set_heure_label_alarm=Label(frame_input_alarm, text="H",font=("Arial", 20))
+set_heure_label_alarm=Label(frame_test, text="H",font=("Arial", 20))
 set_heure_label_alarm.pack(side=LEFT,padx=5)
-set_M_alarm=Entry(frame_input_alarm, text="",width=4,font=("Arial", 15))
+set_M_alarm=Entry(frame_test, text="",width=4,font=("Arial", 15))
 set_M_alarm.pack(side=LEFT,padx=5)
-set_minute_label_alarm=Label(frame_input_alarm, text="M",font=("Arial", 20))
+set_minute_label_alarm=Label(frame_test, text="M",font=("Arial", 20))
 set_minute_label_alarm.pack(side=LEFT,padx=5)
-set_S_alarm=Entry(frame_input_alarm, text="",width=4,font=("Arial", 15))
+set_S_alarm=Entry(frame_test, text="",width=4,font=("Arial", 15))
 set_S_alarm.pack(side=LEFT,padx=5)
-set_seconde_label_alarm=Label(frame_input_alarm, text="S",font=("Arial", 20))
+set_seconde_label_alarm=Label(frame_test, text="S",font=("Arial", 20))
 set_seconde_label_alarm.pack(side=LEFT,padx=5)
+frame_test.pack()
 frame_input_alarm.pack()
 
 lancer_alarm=Button(Frame_horloge, text="Regler l'alarme",font=("Arial", 15), command= test_alarm)
 lancer_alarm.pack(side = TOP,padx=5, pady=5)
 affiche_alarme=Label(Frame_horloge, text="Alarme activé",bg="red", pady=5,font=("Arial", 100))
+affiche_alarme_set=Label(Frame_horloge, text="Alarme enregistré",bg="red", pady=5,font=("Arial", 50))
 Pause=Button(Frame_horloge, text="Pause/reprise",font=("Arial", 15), command= pause)
 Pause.pack(side = TOP,padx=5, pady=5)
 Frame_horloge.pack()
@@ -229,11 +236,12 @@ mode_button.pack(side = TOP,padx=5, pady=5)
 #partie liée à l'affichage du chronometre
 mode_button=Button(Frame_horloge, text="Chronometre",font=("Arial", 15), command= set_chrono)
 mode_button.pack(side = TOP,padx=5, pady=5)
-affiche_chrono=Label(Frame_horloge, text=chrono_time, bg="grey",font=("Arial", 80))
+affiche_chrono=Label(Frame_horloge, text=chrono_time, bg="grey",font=("Arial", 60))
 pause_chrono=Button(Frame_horloge, text="Pause/reprise chronometre",font=("Arial", 15), command= pause_chronometre)
 pause_chrono.pack(side = TOP,padx=5, pady=5)
 
 #lancement de l'horloge
+my_alarm((30,0,0))
 current_systeme = time.strftime("%H,%M,%S")
 heure_systeme = tuple(map(int, current_systeme.split(',')))
 afficher_heure(heure_systeme)
